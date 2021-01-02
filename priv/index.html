@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Erlang API</title>
+</head>
+<body class="bg-gray-100 flex flex-col content-between justify-center">
+<div class="max-w-5xl min-h-full bg-white shadow overflow-hidden sm:rounded-lg my-12 mx-4 sm:mx-12 md:mx-16 lg:mx-24">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+        Erlang API
+    </h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-700">
+        A Erlang/OTP Cowboy REST application that exposes a CRUD API.
+    </p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-800">
+          Description
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          Application is built on top of the Erlang
+          <a class="text-blue-400 hover:text-blue-500" href="https://ninenines.eu/docs/">Cowboy</a>
+          web server, which exposes simple Create, Retrieve, Update and Delete operations using HTTP.
+          <br><br>
+          The purpose of this application is to maintain a database of users' email addresses
+           and to send email messages to all added users via the 
+          <a class="text-blue-400 hover:text-blue-500" href="https://support.google.com/a/answer/2956491?hl=pl">Gmail SMTP</a> service.
+        </dd>
+      </div>
+      <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-800">
+          Available endpoints
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <ul>
+                <li>
+                    <a href="/api/info" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/info</a>
+                    Returns basic info about application and documentation.
+                </li>
+                <li class="mt-4">
+                  <a href="/api" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api</a>
+                  Accepts only <span class="font-medium text-blue-600">GET</span> requests, returns all user's emails in the database:                  
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X GET http://localhost:8080/api
+                  </div>
+                  You can also browse user's emails using `GET` query parameter:
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X GET http://localhost:8080/api?email=kamil
+                  </div>
+                  Such query will return all email addresses containing the phrase `kamil`.
+                </li>
+                <li class="mt-4">
+                  <a href="/api/create" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/create</a>
+                  Accepts only <span class="font-medium text-blue-600">POST</span> requests with valid email data which will be added to database:
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X POST -d 'user@host.test' http://localhost:8080/api/create
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <a href="/api/get/:id" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/get/:id</a>
+                  Accepts only <span class="font-medium text-blue-600">GET</span> requests, retrieves single record from database if its exists:                  
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X GET http://localhost:8080/api/get/:id
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <a href="/api/update/:id" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/update/:id</a>
+                  Accepts only <span class="font-medium text-blue-600">POST</span> requests, updates single record in database if its exists:
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X POST -d 'newuser@host.test' http://localhost:8080/api/update/:id
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <a href="/api/delete/:id" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/delete/:id</a>
+                  Accepts only <span class="font-medium text-blue-600">POST</span> requests, delete single record from database if its exists:                  
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X POST http://localhost:8080/api/delete/:id
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <a href="/api/send" class="px-1 rounded-sm bg-blue-100 font-medium text-blue-400 hover:text-blue-500 mr-2">/api/send</a>
+                  Accepts only empty <span class="font-medium mt-1 text-blue-600">POST</span> requests and sends emails to all user's in the database:
+                  <div class="block mt-1 bg-gray-200 w-full py-3 pl-3 rounded-sm">
+                    <span class="text-blue-400 mr-1">$</span> curl -X POST http://localhost:8080/api/send
+                  </div>
+                </li>
+            </ul>    
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+<div class="container mx-auto px-6">
+  <div class="mt-16 border-t border-gray-200 flex flex-col items-center">
+      <div class="sm:w-2/3 text-center py-6">
+          <p class="text-sm text-gray-800 mb-2">
+              © 2021 Kamil Wozniak
+          </p>
+      </div>
+  </div>
+</div>
+</body>
+</html>
