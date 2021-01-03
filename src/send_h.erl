@@ -53,7 +53,7 @@ send_emails(Emails, Pid) ->
 				N ->
 					Pid ! finish;
 				_ -> 
-					io:fwrite("witam ~w", [counters:get(CounterRef, 1)])
+					ok
 				end;
 		error -> 
 			Pid ! error
