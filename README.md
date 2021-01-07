@@ -10,6 +10,13 @@ Application is built on top of the Erlang [Cowboy](https://ninenines.eu/docs/en/
 
 Cowboy provides a complete HTTP stack for creating REST APIs, while the [`gen_smtp`](https://github.com/gen-smtp/gen_smtp) library allows connection to the smtp server (ex. [Google Gmail SMTP](https://support.google.com/a/answer/2956491?hl=pl)).
 
+### Setting up Gmail for external applications
+
+We need to make some changes in your Gmail account to send an Email. Visit [this](https://myaccount.google.com/u/4/security?pli=1) link with your account signed in.
+Since our web application is not a google registered service, it is a less secured app. Therefore, we allow less secured apps to our settings.
+Then scroll down to `Less secure app access` section of the page and turn on the access.
+
+
 ### Requirements & build
 
 * Unix OS (tested on Ubuntu 20.04 and OS X Catalina)
