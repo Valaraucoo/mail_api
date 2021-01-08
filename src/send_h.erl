@@ -21,7 +21,15 @@ init(Req0, State) ->
             dets:close(records_db),
 
             AllEmails = lists:sort(Records),
-			send_emails(AllEmails, self()),
+            #{email := EmailPattern} = cowboy_req:match_qs([{email, [], ""}], Req0),
+
+			if
+                EmailPattern /= "" ->
+                    Emails = [{Id, Email} || {Id, Email} <- AllEmails, string:str(binary_to_list(Email), binary_to_list(EmailPattern)) > 0],
+                    send_emails(Emails, self());
+                true ->
+                    send_emails(AllEmails, self())
+            end,
 
 			receive
 				finish ->
