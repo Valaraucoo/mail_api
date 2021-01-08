@@ -79,5 +79,3 @@ $ curl http://localhost:8080/
 ### Troubleshooting and errors
 
 * In case the port `8080` is already in use, the application will not start correctly and the process using this port should be killed.
-
-* In case of errors with application dependencies, try comment/uncomment the `DEPS = gen_smtp` line from the `Makefile` file. This error is related to `erlang.mk` problems with multiple dependencies.
